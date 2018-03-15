@@ -17,12 +17,12 @@ module.exports = function(config) {
             base: 'SauceLabs',
             browserName: 'safari',
         },
-        'SL_IE_10': {
-            base: 'SauceLabs',
-            browserName: 'internet explorer',
-            platform: 'Windows 8',
-            version: '10',
-        },
+        // 'SL_IE_10': {
+        //     base: 'SauceLabs',
+        //     browserName: 'internet explorer',
+        //     platform: 'Windows 8',
+        //     version: '10',
+        // },
         'SL_IE_11': {
             base: 'SauceLabs',
             browserName: 'internet explorer',
@@ -64,7 +64,7 @@ module.exports = function(config) {
         singleRun: true,
 
         captureTimeout: 60000,
-        // Somehow karma doesn't capture intermediate behavior and only 
+        // Somehow karma doesn't capture intermediate behavior and only
         // captures once an entire suite is complete. This timeout will
         // guarantee that the browser will have enough time to do this:
 
