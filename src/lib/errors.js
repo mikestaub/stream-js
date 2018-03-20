@@ -21,7 +21,11 @@ function addStack(err) {
  */
 errors.FeedError = function FeedError(msg) {
   var instance = new Error(msg);
-  Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
+  if (Object.setPrototypeOf){
+      Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
+  } else {
+      instance.__proto__ =  Object.getPrototypeOf(this);
+  }
   addStack(this);
   return instance;
 }
@@ -49,7 +53,11 @@ if (Object.setPrototypeOf){
  */
 errors.SiteError = function SiteError(msg) {
   var instance = new Error(msg);
-  Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
+  if (Object.setPrototypeOf){
+      Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
+  } else {
+      instance.__proto__ =  Object.getPrototypeOf(this);
+  }
   addStack(this);
   return instance;
 }
@@ -77,7 +85,11 @@ if (Object.setPrototypeOf){
  */
 errors.MissingSchemaError = function (msg) {
   var instance = new Error(msg);
-  Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
+  if (Object.setPrototypeOf){
+      Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
+  } else {
+      instance.__proto__ =  Object.getPrototypeOf(this);
+  }
   addStack(this);
   return instance;
 }
@@ -107,7 +119,11 @@ if (Object.setPrototypeOf){
  */
 errors.StreamApiError = function StreamApiError(msg, data, response) {
   var instance = new Error(msg, data, response);
-  Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
+  if (Object.setPrototypeOf){
+      Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
+  } else {
+      instance.__proto__ =  Object.getPrototypeOf(this);
+  }
   addStack(this);
   return instance;
 }
