@@ -47,7 +47,7 @@ describe('[UNIT] Redirect URL\'s', function() {
         expect(decoded).to.eql({
             'resource': 'redirect_and_track',
             'action': '*',
-            'user_id': userId,
+            'user_id': '*',
         });
 
         for (var i = 0; i < expectedParts.length; i++) {
@@ -89,7 +89,7 @@ describe('[UNIT] Redirect URL\'s', function() {
         expect(decoded).to.eql({
             'resource': 'redirect_and_track',
             'action': '*',
-            'user_id': userId,
+            'user_id': '*',
         });
 
         for (var i = 0; i < expectedParts.length; i++) {
@@ -100,9 +100,9 @@ describe('[UNIT] Redirect URL\'s', function() {
 
     it('should follow redirect urls', function(done) {
         var events = [{
-                'foreign_id': 'tweet:1',
+                'content': 'tweet:1',
                 'label': 'click',
-                'user_id': 'tommaso',
+                'user_data': 'tommaso',
                 'location': 'email',
                 'feed_id': 'user:global'
             }],
