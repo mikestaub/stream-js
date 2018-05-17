@@ -43,7 +43,7 @@ describe('[UNIT] Stream Feed (Common)', function() {
 
             td.verify(post({
                 url: 'feed/user/matthisk/',
-                body: activity,
+                body: Object.assign({to: []}, activity),
                 signature: 'usermatthisk token',
             }, undefined));
         });
@@ -54,7 +54,7 @@ describe('[UNIT] Stream Feed (Common)', function() {
 
             td.verify(post({
                 url: 'feed/user/matthisk/',
-                body: activity,
+                body: Object.assign({to: []}, activity),
                 signature: 'usermatthisk token',
             }, cb));
         });
@@ -69,9 +69,15 @@ describe('[UNIT] Stream Feed (Common)', function() {
 
             td.verify(post({
                 url: 'feed/user/matthisk/',
-                body: { activities: activities },
+                body: {
+                    activities: activities.map(function(activity) {
+                        return Object.assign({to: []}, activity);
+                    })
+                },
                 signature: 'usermatthisk token',
             }, undefined));
+
+            expect(activities.to).to.be(undefined);
         });
 
         it('(2)', function() {
@@ -80,7 +86,11 @@ describe('[UNIT] Stream Feed (Common)', function() {
 
             td.verify(post({
                 url: 'feed/user/matthisk/',
-                body: { activities: activities },
+                body: {
+                    activities: activities.map(function(activity) {
+                            return Object.assign({to: []}, activity);
+                        })
+                },
                 signature: 'usermatthisk token',
             }, cb));
         });

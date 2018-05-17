@@ -366,12 +366,22 @@ StreamClient.prototype = {
      * @private
      * @param {array} Activities
      */
+    var activitiesToSign = [];
+    activities.forEach(function(activity) {
+      activitiesToSign.push(Object.assign({}, activity));
+    });
+
     if (!this.apiSecret) {
-      return activities;
+      activitiesToSign.forEach(function(activity) {
+        if (!activity.to) {
+          activity.to = [];
+        }
+      });
+      return activitiesToSign;
     }
 
-    for (var i = 0; i < activities.length; i++) {
-      var activity = activities[i];
+    for (var i = 0; i < activitiesToSign.length; i++) {
+      var activity = activitiesToSign[i];
       var to = activity.to || [];
       var signedTo = [];
       for (var j = 0; j < to.length; j++) {
@@ -386,7 +396,7 @@ StreamClient.prototype = {
       activity.to = signedTo;
     }
 
-    return activities;
+    return activitiesToSign;
   },
 
   getFayeAuthorization: function() {

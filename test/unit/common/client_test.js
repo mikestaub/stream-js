@@ -288,14 +288,17 @@ describe('[UNIT] Stream Client (Common)', function() {
 
         it('(1) without to', function() {
             var activities = [{ object: 0, actor: 'matthisk', verb: 'tweet' }];
+            var expected = [{ object: 0, actor: 'matthisk', verb: 'tweet', to: [] }];
 
             var output = this.client.signActivities(activities);
 
-            expect(output).to.equal(activities);
+            expect(output).to.eql(expected);
+            expect(output).to.not.equal(activities);
         });
 
         it('(2) with to', function() {
-            var activities = [{ object: 0, actor: 'matthisk', verb: 'tweet', to: ['global:feed'] }];
+            var to_feed = 'global:feed';
+            var activities = [{ object: 0, actor: 'matthisk', verb: 'tweet', to: [to_feed] }];
 
             var output = this.client.signActivities(activities);
 
@@ -306,15 +309,19 @@ describe('[UNIT] Stream Client (Common)', function() {
                 expect(output[0].to[0].split(' ')[1]).to.be(token);    
             }
 
+            expect(activities[0].to[0]).to.be(to_feed);
+            expect(output).to.not.equal(activities);
         });
 
         it('(3) without secret', function() {
             var activities = [{ object: 0, actor: 'matthisk', verb: 'tweet' }];
+            var expected = [{ object: 0, actor: 'matthisk', verb: 'tweet', to: [] }];
 
             this.client.apiSecret = undefined;
             var output = this.client.signActivities(activities);
 
-            expect(output).to.equal(activities);
+            expect(output).to.eql(expected);
+            expect(output).to.not.equal(activities);
         });
 
     });
