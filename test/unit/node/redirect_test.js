@@ -133,9 +133,14 @@ describe('[UNIT] Redirect URL\'s', function() {
 
     it('should fail creating email redirects on invalid targets', function() {
         var self = this;
-        expect(function() {
+
+        function toThrow() {
             self.client.createRedirectUrl('google.com', 'tommaso', []);
-        }).to.throwException(errors.MissingSchemaError);
+        }
+
+        expect(toThrow).to.throwException(function(e) {
+            expect(e).to.be.a(errors.MissingSchemaError);
+        });
     });
 
 });

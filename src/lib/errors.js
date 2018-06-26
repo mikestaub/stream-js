@@ -1,9 +1,7 @@
-var errors = module.exports;
-
 function addStack(err) {
   /* istanbul ignore else */
   if (typeof Error.captureStackTrace === 'function') {
-    Error.captureStackTrace(err, constructor);
+    Error.captureStackTrace(err, err.constructor);
   } else if (!!(new Error()).stack) { // eslint-disable-line no-extra-boolean-cast
     err.stack = (new Error()).stack;
   } else {
@@ -17,54 +15,29 @@ function addStack(err) {
  * @access private
  * @extends ErrorAbstract
  * @memberof Stream.errors
- * @param {String} [msg] - An error message that will probably end up in a log.
+ * @param {String} message An error message that will probably end up in a log.
  */
-errors.FeedError = function FeedError(msg) {
-  var instance = new Error(msg);
-  Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
-  addStack(this);
-  return instance;
-};
-errors.FeedError.prototype = Object.create(Error.prototype, {
-  constructor: {
-    value: Error,
-    enumerable: false,
-    writable: true,
-    configurable: true
+class FeedError extends Error {
+  constructor(message) {
+    super(message);
+    this.message = message;
+    addStack(this);
   }
-});
-if (Object.setPrototypeOf){
-    Object.setPrototypeOf(errors.FeedError, Error);
-} else {
-    errors.FeedError.__proto__ = Error;
 }
-
 /**
  * SiteError
  * @class SiteError
  * @access private
  * @extends ErrorAbstract
  * @memberof Stream.errors
- * @param  {string}  [msg]  An error message that will probably end up in a log.
+ * @param  {string}  message An error message that will probably end up in a log.
  */
-errors.SiteError = function SiteError(msg) {
-  var instance = new Error(msg);
-  Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
-  addStack(this);
-  return instance;
-};
-errors.SiteError.prototype = Object.create(Error.prototype, {
-  constructor: {
-    value: Error,
-    enumerable: false,
-    writable: true,
-    configurable: true
+class SiteError extends Error {
+  constructor(message) {
+    super(message);
+    this.message = message;
+    addStack(this);
   }
-});
-if (Object.setPrototypeOf){
-    Object.setPrototypeOf(errors.SiteError, Error);
-} else {
-    errors.SiteError.__proto__ = Error;
 }
 
 /**
@@ -73,26 +46,14 @@ if (Object.setPrototypeOf){
  * @access private
  * @extends ErrorAbstract
  * @memberof Stream.errors
- * @param  {string} msg
+ * @param  {string} message An error message that will probably end up in a log.
  */
-errors.MissingSchemaError = function (msg) {
-  var instance = new Error(msg);
-  Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
-  addStack(this);
-  return instance;
-};
-errors.MissingSchemaError.prototype = Object.create(Error.prototype, {
-  constructor: {
-    value: Error,
-    enumerable: false,
-    writable: true,
-    configurable: true
+class MissingSchemaError extends Error {
+  constructor(message) {
+    super(message);
+    this.message = message;
+    addStack(this);
   }
-});
-if (Object.setPrototypeOf){
-    Object.setPrototypeOf(errors.MissingSchemaError, Error);
-} else {
-    errors.MissingSchemaError.__proto__ = Error;
 }
 
 /**
@@ -101,26 +62,23 @@ if (Object.setPrototypeOf){
  * @access private
  * @extends ErrorAbstract
  * @memberof Stream.errors
- * @param  {string} msg
+ * @param  {string} message An error message that will probably end up in a log.
  * @param  {object} data
  * @param  {object} response
  */
-errors.StreamApiError = function StreamApiError(msg, data, response) {
-  var instance = new Error(msg, data, response);
-  Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
-  addStack(this);
-  return instance;
-};
-errors.StreamApiError.prototype = Object.create(Error.prototype, {
-  constructor: {
-    value: Error,
-    enumerable: false,
-    writable: true,
-    configurable: true
+class StreamApiError extends Error {
+  constructor(message, data, response) {
+    super(message);
+    this.message = message;
+    this.data = data;
+    this.response = response;
+    addStack(this);
   }
-});
-if (Object.setPrototypeOf){
-    Object.setPrototypeOf(errors.StreamApiError, Error);
-} else {
-    errors.StreamApiError.__proto__ = Error;
+}
+
+module.exports = {
+  FeedError,
+  SiteError,
+  MissingSchemaError,
+  StreamApiError
 }
