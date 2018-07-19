@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 ./node_modules/.bin/webpack
+ls -l ./node_modules
 npm test
 ./bin/coveralls.sh
 if [ ${RUN_LINTERS:="no"} == "yes" ]; then
